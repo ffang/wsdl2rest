@@ -23,7 +23,8 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 
-import org.jboss.fuse.wsdl2rest.jaxws.Item;
+import org.jboss.fuse.wsdl2rest.jaxws.doclit.Item;
+
 
 @WebService
 @SOAPBinding(style = Style.RPC)

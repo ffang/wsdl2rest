@@ -1,7 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="AddressService" targetNamespace="http://rpclit.jaxws.wsdl2rest.fuse.jboss.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://rpclit.jaxws.wsdl2rest.fuse.jboss.org/" xmlns:ns1="http://jaxb.dev.java.net/array" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+<wsdl:definitions name="AddressService" targetNamespace="http://rpclit.jaxws.wsdl2rest.fuse.jboss.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://rpclit.jaxws.wsdl2rest.fuse.jboss.org/" xmlns:ns2="http://jaxb.dev.java.net/array" xmlns:ns1="http://doclit.jaxws.wsdl2rest.fuse.jboss.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
   <wsdl:types>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://rpclit.jaxws.wsdl2rest.fuse.jboss.org/" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://jaxb.dev.java.net/array" version="1.0">
+
+  <xs:complexType final="#all" name="intArray">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="item" nillable="true" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:tns="http://doclit.jaxws.wsdl2rest.fuse.jboss.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://doclit.jaxws.wsdl2rest.fuse.jboss.org/" version="1.0">
+
+  <xs:element name="addAddress" type="tns:addAddress"/>
+
+  <xs:element name="addAddressResponse" type="tns:addAddressResponse"/>
+
+  <xs:element name="delAddress" type="tns:delAddress"/>
+
+  <xs:element name="delAddressResponse" type="tns:delAddressResponse"/>
+
+  <xs:element name="getAddress" type="tns:getAddress"/>
+
+  <xs:element name="getAddressResponse" type="tns:getAddressResponse"/>
+
+  <xs:element name="listAddresses" type="tns:listAddresses"/>
+
+  <xs:element name="listAddressesResponse" type="tns:listAddressesResponse"/>
+
+  <xs:element name="updAddress" type="tns:updAddress"/>
+
+  <xs:element name="updAddressResponse" type="tns:updAddressResponse"/>
 
   <xs:complexType name="item">
     <xs:sequence>
@@ -11,12 +40,61 @@
     </xs:sequence>
   </xs:complexType>
 
-</xs:schema>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://jaxb.dev.java.net/array" version="1.0">
-
-  <xs:complexType final="#all" name="intArray">
+  <xs:complexType name="addAddress">
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="item" nillable="true" type="xs:int"/>
+      <xs:element minOccurs="0" name="arg0" type="tns:item"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="addAddressResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="delAddress">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="delAddressResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:item"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getAddress">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getAddressResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:item"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="listAddresses">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="listAddressesResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updAddress">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:item"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updAddressResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -29,7 +107,7 @@
   <wsdl:message name="listAddresses">
   </wsdl:message>
   <wsdl:message name="updAddress">
-    <wsdl:part name="arg0" type="tns:item">
+    <wsdl:part name="arg0" type="ns1:item">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="updAddressResponse">
@@ -37,7 +115,7 @@
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="delAddressResponse">
-    <wsdl:part name="return" type="tns:item">
+    <wsdl:part name="return" type="ns1:item">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="addAddressResponse">
@@ -45,11 +123,11 @@
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="listAddressesResponse">
-    <wsdl:part name="return" type="ns1:intArray">
+    <wsdl:part name="return" type="ns2:intArray">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="getAddressResponse">
-    <wsdl:part name="return" type="tns:item">
+    <wsdl:part name="return" type="ns1:item">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="delAddress">
@@ -57,7 +135,7 @@
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="addAddress">
-    <wsdl:part name="arg0" type="tns:item">
+    <wsdl:part name="arg0" type="ns1:item">
     </wsdl:part>
   </wsdl:message>
   <wsdl:portType name="Address">

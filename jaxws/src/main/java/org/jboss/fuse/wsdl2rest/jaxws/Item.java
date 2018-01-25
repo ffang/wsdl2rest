@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Item {
+public class Item extends org.jboss.fuse.wsdl2rest.jaxws.doclit.Item {
     
     public static DateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
     
@@ -28,14 +28,7 @@ public class Item {
         this.name = name;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
+    
     @Override
     public int hashCode() {
         return toString().hashCode();
@@ -49,6 +42,6 @@ public class Item {
     }
 
     public String toString() {
-        return "Item[" + id + "," + name + "," + DATE_FORMAT.format(dateOfBirth) + "]";
+        return "Item[" + id + "," + name + "," + dateOfBirth + "]";
     }
 }

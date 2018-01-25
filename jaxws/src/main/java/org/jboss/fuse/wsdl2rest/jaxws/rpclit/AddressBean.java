@@ -23,7 +23,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.jboss.fuse.wsdl2rest.jaxws.Item;
+import org.jboss.fuse.wsdl2rest.jaxws.doclit.Item;
 import org.jboss.fuse.wsdl2rest.jaxws.ItemBuilder;
 
 public class AddressBean {

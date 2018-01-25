@@ -12,7 +12,7 @@
         
     <bean id="addressBean" class="org.jboss.fuse.wsdl2rest.jaxws.rpclit.AddressBean"/>
     
-    <camelContext id="cxfws" xmlns="http://camel.apache.org/schema/spring">
+    <camelContext id="cxfws" trace="true" xmlns="http://camel.apache.org/schema/spring">
     
         <restConfiguration component="jetty" host="0.0.0.0" port="8081" bindingMode="json">
         </restConfiguration>

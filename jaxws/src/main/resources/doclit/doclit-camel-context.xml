@@ -12,7 +12,51 @@
         
     <bean id="addressBean" class="org.jboss.fuse.wsdl2rest.jaxws.doclit.AddressBean"/>
     
-    <camelContext id="cxfws" xmlns="http://camel.apache.org/schema/spring">
+    <camelContext trace="true" id="cxfws" xmlns="http://camel.apache.org/schema/spring"  streamCache="true">
+        <dataFormats>
+            <xmljson id="xmljson"/>
+        </dataFormats>
+
+
+        <restConfiguration component="jetty" host="0.0.0.0" port="8081" bindingMode="json">
+        </restConfiguration>
+        <rest path="/jaxrs">
+
+          <get uri="/address/{arg0}" 
+            type="int"
+            outType="org.jboss.fuse.wsdl2rest.jaxws.doclit.Item" 
+            >
+            <to uri="direct:getAddress"/>
+          </get>
+
+          <get uri="/addresses" 
+            outType="String" 
+            >
+            <to uri="direct:listAddresses"/>
+          </get>
+
+          <put uri="/address" 
+            type="org.jboss.fuse.wsdl2rest.jaxws.doclit.Item"
+            outType="int" 
+            consumes="application/json" 
+            >
+            <to uri="direct:updAddress"/>
+          </put>
+
+          <delete uri="/address/{arg0}" 
+            type="int"
+            outType="org.jboss.fuse.wsdl2rest.jaxws.doclit.Item" 
+            >
+            <to uri="direct:delAddress"/>
+          </delete>
+
+          <post uri="/address" 
+            type="org.jboss.fuse.wsdl2rest.jaxws.doclit.Item"
+            consumes="application/json"
+            >
+            <to uri="direct:addAddress"/>
+          </post>
+        </rest>
         <route id="consumerRoute">
             <from uri="cxf:bean:cxfConsumer" />
             <log loggingLevel="INFO" message="${header.operationName}"/>
@@ -40,25 +84,90 @@
                 </when>
             </choice>
         </route>
-        
+
         <route id="listAddressesRoute">
-            <from uri="direct:listAddresses" />
+            <from uri="direct:listAddresses"/>
+            <setBody>
+                <simple>null</simple>
+            </setBody>
             <to uri="cxf://http://localhost:8080/doclit/AddressService?serviceClass=org.jboss.fuse.wsdl2rest.jaxws.doclit.Address&amp;defaultOperationName=listAddresses"/>
+            <setBody>
+                <simple>${body[0]}</simple>
+            </setBody>
         </route>
         
         <route id="addAddressRoute">
             <from uri="direct:addAddress" />
+            <!--unmarshal id="_unmarshal2">
+                <json library="Jackson" unmarshalTypeName="org.jboss.fuse.wsdl2rest.jaxws.doclit.AddAddress"/>
+            </unmarshal-->
             <to uri="cxf://http://localhost:8080/doclit/AddressService?serviceClass=org.jboss.fuse.wsdl2rest.jaxws.doclit.Address&amp;defaultOperationName=addAddress"/>
+            <setHeader headerName="Content-Type">
+               <constant>text/plain</constant>
+            </setHeader>
+            <!--marshal id="_marshal1">
+                <json library="Jackson"/>
+            </marshal-->
+            <!--log message="==============: ${body}"/--> 
+            <!--marshal ref="xmljson"/-->
+            <setBody>
+                <simple>${body}</simple>
+            </setBody>
         </route>
         
         <route id="getAddressRoute">
             <from uri="direct:getAddress" />
+            <setBody>
+                <simple>${header.arg0}</simple>
+            </setBody>
+            <log message="==============: ${body}"/>
+            <unmarshal id="_unmarshal2">
+                <json library="Jackson" unmarshalTypeName="java.lang.Integer"/>
+            </unmarshal>
             <to uri="cxf://http://localhost:8080/doclit/AddressService?serviceClass=org.jboss.fuse.wsdl2rest.jaxws.doclit.Address&amp;defaultOperationName=getAddress"/>
+            <setBody>
+                <simple>${body[0]}</simple>
+            </setBody>
+            <!--marshal id="_marshal1">
+                <json library="Jackson"/>
+            </marshal-->
+            <log message="++++++: ${body}"/>
+            <setHeader headerName="Content-Type">
+               <constant>application/json</constant>
+            </setHeader>
         </route>
         
         <route id="updAddressRoute">
             <from uri="direct:updAddress" />
             <to uri="cxf://http://localhost:8080/doclit/AddressService?serviceClass=org.jboss.fuse.wsdl2rest.jaxws.doclit.Address&amp;defaultOperationName=updAddress"/>
+            <setHeader headerName="Content-Type">
+               <constant>text/plain</constant>
+            </setHeader>
+            <setBody>
+                <simple>${body}</simple>
+            </setBody>
+        </route>
+
+        <route id="delAddressRoute">
+            <from uri="direct:delAddress" />
+            <setBody>
+                <simple>${header.arg0}</simple>
+            </setBody>
+            <log message="==============: ${body}"/>
+            <unmarshal id="_unmarshal3">
+                <json library="Jackson" unmarshalTypeName="java.lang.Integer"/>
+            </unmarshal>
+            <to uri="cxf://http://localhost:8080/doclit/AddressService?serviceClass=org.jboss.fuse.wsdl2rest.jaxws.doclit.Address&amp;defaultOperationName=delAddress"/>
+            <setBody>
+                <simple>${body[0]}</simple>
+            </setBody>
+            <!--marshal id="_marshal1">
+                <json library="Jackson"/>
+            </marshal-->
+            <log message="++++++: ${body}"/>
+            <setHeader headerName="Content-Type">
+               <constant>application/json</constant>
+            </setHeader>
         </route>
     </camelContext>
 
