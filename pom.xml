@@ -298,16 +298,15 @@
                     <version>2.3.0</version>
                 </dependency>
                 <dependency>
-                    <groupId>com.sun.xml.bind</groupId>
-                    <artifactId>jaxb-impl</artifactId>
-                    <version>2.3.0</version>
+                    <groupId>org.glassfish.jaxb</groupId>
+                    <artifactId>jaxb-runtime</artifactId>
                     <scope>test</scope>
+                    <version>2.3.1</version>
                 </dependency>
                 <dependency>
-                    <groupId>com.sun.xml.bind</groupId>
-                    <artifactId>jaxb-core</artifactId>
- 		    <version>2.3.0</version>
-                    <scope>test</scope>
+                    <groupId>com.sun.activation</groupId>
+                    <artifactId>javax.activation</artifactId>
+                    <version>1.2.0</version>
                 </dependency>
             </dependencies>
         </profile>
